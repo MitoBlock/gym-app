@@ -1,0 +1,17 @@
+.main-page {
+	background-color: black; // rgb(29, 29, 29);
+	height: 80vh;
+	width: 100%;
+
+	&_content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		&_img-container {
+
+		}
+
+
+	}
+
+}
