@@ -20,15 +20,15 @@
 
   <h2 class="list-title text-light bg-dark p-2">Current Tokens</h2>
 
-  <div *ngIf="tokenList.length > 0 && currentToken != null" class="tokenBadge" >
-    <img class="tokenBadgeImage" src="../../assets/images/DiscountTokenLarge2.png" />
+  <div *ngIf="tokenList.length > 0 && currentToken" class="tokenBadge" >
+    <img class="tokenBadgeImage" src="../../assets/images/MembershipTokenLarge2.png" />
     <div class="centered">
       <b>User</b>: {{ user.account }} <br />
-      <b>Activity:</b>  {{ currentToken?.activityName}}  <br />
-      <b>Score:</b>  {{ currentToken?.score }}  <br />
-      <b>Discount Value:</b> {{ currentToken?.discountValue }} <br />
-      <b>Item Type:</b> {{ currentToken?.itemType }} <br />
-      <b>Expiry:</b> {{ currentToken?.expiryDate }} <br/>
+      <b>Activity:</b>  {{ currentToken.activityName}}  <br />
+      <b>Score:</b>  {{ currentToken.score }}  <br />
+      <b>Discount Value:</b> {{ currentToken.discountValue }} <br />
+      <b>Item Type:</b> {{ currentToken.itemType }} <br />
+      <b>Expiry:</b> {{ currentToken.expiryDate }} <br/>
     </div>
   </div>
 

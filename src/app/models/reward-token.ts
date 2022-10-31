@@ -31,6 +31,11 @@ export interface TokensResp {
   pagination: { total: number };
 }
 
+export interface MembershipTokensResp {
+  MembershipToken: Token[];
+  pagination: { total: number };
+}
+
 export interface DiscountTokenStatusResp {
   DiscountToken: DiscountToken;
   DiscountTokenStatus?: DiscountTokenStatus[];

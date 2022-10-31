@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DiscountTokenStatusResp, MembershipTokenStatusResp, TokensResp } from '../models/reward-token';
+import { DiscountTokenStatusResp, MembershipTokensResp, MembershipTokenStatusResp, TokensResp } from '../models/reward-token';
 import { User } from '../models/user';
 import { api, goapi, mitoapi } from './api';
 
@@ -45,8 +45,8 @@ export class UserService {
   }
 
   // TODO: is this right?
-  getMembershipTokens(): Observable<TokensResp> {
-    return this.http.get<TokensResp>(`${mitoapi}membership_tokens`);
+  getMembershipTokens(): Observable<MembershipTokensResp> {
+    return this.http.get<MembershipTokensResp>(`${mitoapi}membership_tokens`);
   }
 
   // getTokenStatus(id: number) : Observable<TokenStatusResp> {
