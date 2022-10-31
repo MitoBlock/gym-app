@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SecondPageComponent } from './second-page/second-page.component';
-import { FinalPageComponent } from './final-page/final-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './service/user.service';
@@ -17,7 +16,6 @@ import { UserService } from './service/user.service';
     HeaderComponent,
     MainPageComponent,
     SecondPageComponent,
-    FinalPageComponent
   ],
   imports: [
     BrowserModule,

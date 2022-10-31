@@ -1,12 +1,9 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EventEmitter, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Account } from "../models/account";
-import { RewardToken } from "../models/reward-token";
-import { User } from "../models/user";
-import { api } from "./api";
-import { Balance } from "../models/balance";
-import { BalanceWrapper } from "../models/balance-dto";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { DiscountTokenStatusResp, MembershipTokenStatusResp, TokensResp } from '../models/reward-token';
+import { User } from '../models/user';
+import { api, goapi, mitoapi } from './api';
 
 export const HTTP_OPTIONS = {
   headers: new HttpHeaders({
@@ -21,35 +18,52 @@ export const HTTP_OPTIONS = {
 
 @Injectable()
 export class UserService {
-	
-	onUserAdded = new EventEmitter<User>();
+  onUserAdded = new EventEmitter<User>();
 
-	constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
-  reduceTokenPoints(token: RewardToken) : Observable<Account>  {
-		return this.http.put<Account>(`${api}rewardToken/${token.id}`, {});
+  // TODO: shoould the next endpoints be using api or mitoapi?
+  removeDiscountTokenStatus(): Observable<any> {
+    // should be delete action, but that doesn't allow body
+    return this.http.get<any>(`${goapi}deleteDiscountTokenStatus`);
+  }
+  removeMembershipTokenStatus(): Observable<any> {
+    return this.http.get<any>(`${goapi}deleteMembershipTokenStatus`);
   }
 
-	removeToken(rewardToken : RewardToken) : Observable<Account> {
-		// should be delete action, but that doesn't allow body
-		return this.http.put<Account>(`${api}rewardToken`, rewardToken);
+  addDiscountToken(): Observable<any> {
+    console.log('add burito token');
+    return this.http.get(`${goapi}discountToken`);
+  }
+  addMembershipToken(): Observable<any> {
+    console.log('adding membership token');
+    return this.http.get(`${goapi}membershipToken`);
   }
 
-	addToken(rewardToken : RewardToken) : Observable<Account> {
-		return this.http.post<Account>(`${api}rewardToken`, rewardToken, HTTP_OPTIONS);
-	}
-	
-	addUser(user : User) : Observable<User> {
-		return this.http.post<User>(`${api}user`, user);
-	}
+  getDiscountTokens(): Observable<TokensResp> {
+    return this.http.get<TokensResp>(`${mitoapi}discount_tokens`);
+  }
 
-	getUser(id : number) {
-		return this.http.get<User>(`${api}user/${id}`);
-	}
+  // TODO: is this right?
+  getMembershipTokens(): Observable<TokensResp> {
+    return this.http.get<TokensResp>(`${mitoapi}membership_tokens`);
+  }
 
-	getBalance(address: string){
-		return this.http.get<BalanceWrapper>(`${api}cosmos/bank/v1beta1/balances/${address}/by_denom?denom=mitocell`);
-	}
-	
-	
+  // getTokenStatus(id: number) : Observable<TokenStatusResp> {
+  // hardcoding token id
+  getDiscountTokenStatus(): Observable<DiscountTokenStatusResp> {
+    return this.http.get<DiscountTokenStatusResp>(
+      `${mitoapi}discount_token_status_q/0`,
+    );
+  }
+
+  getMembershipTokenStatus(): Observable<MembershipTokenStatusResp> {
+    return this.http.get<MembershipTokenStatusResp>(
+      `${mitoapi}membership_token_status_q/0`,
+    );
+  }
+
+  getTokens(): Observable<TokensResp> {
+    return this.http.get<TokensResp>(`${goapi}tokens`);
+  }
 }
