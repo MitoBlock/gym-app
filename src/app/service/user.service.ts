@@ -22,11 +22,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // TODO: shoould the next endpoints be using api or mitoapi?
   removeDiscountTokenStatus(): Observable<any> {
     // should be delete action, but that doesn't allow body
     return this.http.get<any>(`${goapi}deleteDiscountTokenStatus`);
   }
+
   removeMembershipTokenStatus(): Observable<any> {
     return this.http.get<any>(`${goapi}deleteMembershipTokenStatus`);
   }
@@ -49,7 +49,6 @@ export class UserService {
     return this.http.get<MembershipTokensResp>(`${mitoapi}membership_tokens`);
   }
 
-  // getTokenStatus(id: number) : Observable<TokenStatusResp> {
   // hardcoding token id
   getDiscountTokenStatus(): Observable<DiscountTokenStatusResp> {
     return this.http.get<DiscountTokenStatusResp>(
