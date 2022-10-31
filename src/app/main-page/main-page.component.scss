@@ -5,10 +5,15 @@
 
 	&_content {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr 1.5fr;
+		justify-content: center;
+		align-items: center;
 
 		&_img-container {
 
+			&_img {
+				// object-fit: contain;
+			}
 		}
 
 
