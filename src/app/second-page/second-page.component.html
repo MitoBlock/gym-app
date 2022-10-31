@@ -1,1 +1,63 @@
-<p>second-page works!</p>
+<div class="user-page-container">
+
+  <table class="table table-sm table-light mt-3">
+    <thead>
+      <tr>
+        <th scope="col" class="col-ob">Name</th>
+        <th scope="col" class="col-bo">Account</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Bob</td>
+        <td class="tokenAddress">{{ user.account }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+
+  <br />
+
+  <h2 class="list-title text-light bg-dark p-2">Current Tokens</h2>
+
+  <div *ngIf="tokenList.length > 0 && currentToken != null" class="tokenBadge" >
+    <img class="tokenBadgeImage" src="../../assets/images/DiscountTokenLarge2.png" />
+    <div class="centered">
+      <b>User</b>: {{ user.account }} <br />
+      <b>Activity:</b>  {{ currentToken?.activityName}}  <br />
+      <b>Score:</b>  {{ currentToken?.score }}  <br />
+      <b>Discount Value:</b> {{ currentToken?.discountValue }} <br />
+      <b>Item Type:</b> {{ currentToken?.itemType }} <br />
+      <b>Expiry:</b> {{ currentToken?.expiryDate }} <br/>
+    </div>
+  </div>
+
+  <br />
+
+  <h1 class="list-title activity p-2">Activities</h1>
+
+  <br />
+
+  <div class="d-flex justify-content-around w-100 align-items-center mb-5">
+    <div class="coupon-card">
+      <h4 class="coupon-title">Get 5% off Classes</h4>
+
+      <div class="text-center">
+        <img
+          class="long-img"
+          src="../../assets/images/fitness4.jpg"
+          alt="trainer photo"
+        />
+      </div>
+    </div>
+    <div>
+      <button
+        [disabled]="userRewarded"
+        class="btn btn-lg m-3 btn-dark blk-btn"
+        (click)="handleUseDiscount()"
+      >
+        Use
+      </button>
+    </div>
+  </div>
+</div>
