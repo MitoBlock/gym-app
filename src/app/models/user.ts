@@ -1,13 +1,9 @@
-import { Balance } from "./balance";
-
 export class User {
-	public name: string
-	account : string
-	balance : Balance
-	
-	constructor(name: string, account : string, balance : Balance) {
-		this.name = name;
-		this.account = account;
-		this.balance = balance;
-	}
+  name: string;
+  address: string;
+
+  constructor(name: string, address: string) {
+    this.name = name;
+    this.address = address;
+  }
 }

@@ -4,13 +4,13 @@
     <thead>
       <tr>
         <th scope="col" class="col-ob">Name</th>
-        <th scope="col" class="col-bo">Account</th>
+        <th scope="col" class="col-bo">Address</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Bob</td>
-        <td class="tokenAddress">{{ user.account }}</td>
+        <td class="tokenAddress">{{ user.address }}</td>
       </tr>
     </tbody>
   </table>
@@ -23,7 +23,7 @@
   <div *ngIf="tokenList.length > 0 && currentToken" class="tokenBadge" >
     <img class="tokenBadgeImage" src="../../assets/images/MembershipTokenLarge2.png" />
     <div class="centered">
-      <b>User</b>: {{ user.account }} <br />
+      <b>User</b>: {{ user.address }} <br />
       <b>Activity:</b>  {{ currentToken.activityName}}  <br />
       <b>Score:</b>  {{ currentToken.score }}  <br />
       <b>Discount Value:</b> {{ currentToken.discountValue }} <br />

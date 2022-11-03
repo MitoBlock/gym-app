@@ -1,9 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DiscountTokenStatusResp, MembershipTokensResp, MembershipTokenStatusResp, TokensResp } from '../models/reward-token';
+import {
+  DeleteTokenStatusReq,
+  DiscountTokenReq,
+  DiscountTokenStatusResp,
+  MembershipTokenReq,
+  MembershipTokensResp,
+  MembershipTokenStatusResp,
+  TokensResp,
+} from '../models/types';
 import { User } from '../models/user';
-import { api, goapi, mitoapi } from './api';
+import { mitoapi } from './api';
+import { goapi } from './api';
 
 export const HTTP_OPTIONS = {
   headers: new HttpHeaders({
@@ -22,29 +31,31 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  removeDiscountTokenStatus(): Observable<any> {
-    // should be delete action, but that doesn't allow body
-    return this.http.get<any>(`${goapi}deleteDiscountTokenStatus`);
+  getUserAddress(): Observable<any> {
+    return this.http.get(`${goapi}addr`);
   }
 
-  removeMembershipTokenStatus(): Observable<any> {
-    return this.http.get<any>(`${goapi}deleteMembershipTokenStatus`);
+  removeDiscountTokenStatus(body: DeleteTokenStatusReq): Observable<any> {
+    return this.http.post<any>(`${goapi}discountTokenStatus`, body);
   }
 
-  addDiscountToken(): Observable<any> {
-    console.log('add burito token');
-    return this.http.get(`${goapi}discountToken`);
+  // only used in gym app
+  removeMembershipTokenStatus(body: DeleteTokenStatusReq): Observable<any> {
+    return this.http.post<any>(`${goapi}membershipTokenStatus`, body);
   }
-  addMembershipToken(): Observable<any> {
-    console.log('adding membership token');
-    return this.http.get(`${goapi}membershipToken`);
+
+  addDiscountToken(body: DiscountTokenReq): Observable<any> {
+    return this.http.post(`${goapi}discountToken`, body);
+  }
+
+  addMembershipToken(body: MembershipTokenReq): Observable<any> {
+    return this.http.post(`${goapi}membershipToken`, body);
   }
 
   getDiscountTokens(): Observable<TokensResp> {
     return this.http.get<TokensResp>(`${mitoapi}discount_tokens`);
   }
 
-  // TODO: is this right?
   getMembershipTokens(): Observable<MembershipTokensResp> {
     return this.http.get<MembershipTokensResp>(`${mitoapi}membership_tokens`);
   }

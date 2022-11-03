@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Balance } from '../models/balance';
-import { Token } from '../models/reward-token';
+import { Token } from '../models/types';
 import { User } from '../models/user';
 import { UserService } from '../service/user.service';
 
@@ -11,18 +10,13 @@ import { UserService } from '../service/user.service';
   styleUrls: ['./second-page.component.scss'],
 })
 export class SecondPageComponent implements OnInit {
-  balance: Balance = { denom: 'mitocell', amount: '0' };
-  user: User = new User(
-    'Bob',
-    'mito1ssl9xlelyk0u93w5x50snxwslcspfq4pdurj34',
-    this.balance,
-  );
+  user: User = new User('Bob', 'loading...');
 
-  currentToken?: Token 
+  currentToken?: Token;
   membershipClaimed = false;
   showTimer = false;
   counter = 5;
-  score = 0;
+  score = '0';
   userRewarded = false;
   tokenList: Token[] = [];
 
@@ -34,22 +28,45 @@ export class SecondPageComponent implements OnInit {
 
   ngOnInit() {
     this.refreshTokenList();
+    this.userService.getUserAddress().subscribe((address) => {
+      this.user.address = address;
+    });
   }
 
+  fixDate(date: string) {
+    var dateArr = date.split(' ');
+    let formattedDate = `${dateArr[1]} ${dateArr[2]} ${dateArr[3]}`;
+    return formattedDate;
+  }
+  getCurrDate() {
+    let currDate = new Date();
+    return this.fixDate(currDate.toString());
+  }
+  getExpDate() {
+    let expDate = new Date();
+    expDate.setMonth(expDate.getMonth() + 1);
+    return this.fixDate(expDate.toString());
+  }
   // handle discount for 5% off
   handleUseDiscount() {
     console.log('handle use discount');
-    this.userService.removeMembershipTokenStatus().subscribe((data) => {
-      console.log('membership token invalidated');
-      this.userRewarded = true;
-      this.refreshTokenList();
-    });
+    this.userService
+      .removeMembershipTokenStatus({
+        token_id: 0,
+        id: 0,
+        timestamp: this.getCurrDate(),
+      })
+      .subscribe((data) => {
+        console.log('membership token invalidated');
+        this.userRewarded = true;
+        this.refreshTokenList();
+      });
   }
 
   refreshTokenList() {
     this.userService.getMembershipTokens().subscribe((data) => {
       console.log('calling tokens service');
-      console.log( { data })
+      console.log({ data });
       if (data.MembershipToken.length !== 0) {
         console.log('got tokens response');
         this.currentToken = data.MembershipToken[0];
@@ -60,7 +77,7 @@ export class SecondPageComponent implements OnInit {
             statusData.MembershipTokenStatus[0].status == 'Valid'
           ) {
             console.log('statis valid');
-            console.log( { statusData })
+            console.log({ statusData });
             this.tokenList = data.MembershipToken;
             this.userRewarded = false;
           } else this.tokenList = [];
