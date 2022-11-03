@@ -47,17 +47,19 @@ export class SecondPageComponent implements OnInit {
     expDate.setMonth(expDate.getMonth() + 1);
     return this.fixDate(expDate.toString());
   }
-  // handle discount for 5% off
-  handleUseDiscount() {
-    console.log('handle use discount');
+  
+  handleUseMembership() {
+    console.log('handle use membership');
     this.userService
       .removeMembershipTokenStatus({
         token_id: 0,
         id: 0,
         timestamp: this.getCurrDate(),
+        status: "Invalid"
       })
       .subscribe((data) => {
         console.log('membership token invalidated');
+        alert("Membership applied");
         this.userRewarded = true;
         this.refreshTokenList();
       });

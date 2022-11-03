@@ -81,6 +81,7 @@ export interface DeleteTokenStatusReq {
   token_id: number;
   id: number;
   timestamp: string;
+  status: string;
 }
 
 export interface DeleteMembershipTokenStatusReq {
