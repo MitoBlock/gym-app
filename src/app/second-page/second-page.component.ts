@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Token } from '../models/types';
 import { User } from '../models/user';
 import { UserService } from '../service/user.service';
@@ -59,7 +60,7 @@ export class SecondPageComponent implements OnInit {
       })
       .subscribe((data) => {
         console.log('membership token invalidated');
-        alert("Membership applied");
+        Swal.fire("Membership applied!","3 month gym membership","success");
         this.userRewarded = true;
         this.refreshTokenList();
       });
